@@ -1,7 +1,7 @@
 var jf = require('jsonfile')
 var util = require('util')
 
-var deviceIDs = ["tiny_disruptor", "little_giant", "nimble_sprout", "shiny_seed", "saucy_root", "kingly_leaf", "curly_thistle", "picky_prickle", "thorny_velvet", "springy_pollen"];
+/*var deviceIDs = ["tiny_disruptor", "little_giant", "nimble_sprout", "shiny_seed", "saucy_root", "kingly_leaf", "curly_thistle", "picky_prickle", "thorny_velvet", "springy_pollen"];
 var baseInterval = 1000;
 var requestCount = 1;
 
@@ -9,12 +9,12 @@ var requestCount = 1;
 var totalRequests = 672*deviceIDs.length;
 
 // ------------------------- FUNCTION DEFINITIONS END -------------------------
-
+*/
 var getJson = function(deviceID){
   var file = '/home/root/data.json'
   jf.readFile(file, function(err, obj) {
     //console.log(obj);
-    var dayRequest = 1;
+    /*var dayRequest = 1;
     var rising = true;
     for(var dayRequestCount = 0; dayRequestCount < 12; dayRequestCount++){
       var pon = random(1,5);
@@ -48,9 +48,9 @@ var getJson = function(deviceID){
       console.log("\t\tApplying differenceLight: " + differenceLight + ", differenceTemp: " + differenceTemp);
       console.log("\t\tTemp: " + obj.temp + ", Light: " + obj.light + (rising == true ? " RISING" : " LOWERING"));
       console.log("dayRequest:" + dayRequest);
-      requestCount++;
+      requestCount++;*/
       report(deviceID, obj.temp, obj.light);
-    }
+    //}
     //console.log("requestCount:" + requestCount);
     
     
@@ -79,17 +79,23 @@ var report = function(deviceID, temperature, light) {
 };
 
 // ------------------------- FUNCTION DEFINITIONS END -------------------------
-var totalDays = 28;
+/*var totalDays = 28;
 for(var day = 0; day < totalDays; day++){
   deviceIDs.forEach(function(deviceID){
     console.log("Current request count: " + requestCount);
-
+*/
+var callServer = function(){
+    var deviceID = "tiny_disruptor";
     console.log("\tPosting as " + deviceID);
     getJson(deviceID);
-
-  });
+    setTimeout(callServer, 5000);
 };
 
+callServer();
+/*
+  });
+};
+*/
 var random = function (low, high) {
     return Math.random() * (high - low) + low;
 }

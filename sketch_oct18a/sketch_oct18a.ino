@@ -50,7 +50,7 @@ void loop() {
     digitalWrite(ledPin, LOW);
     on = false;
   }
-  delay(10);
+  delay(500);
 
 }
 
