@@ -6,7 +6,7 @@
 */
 //#include <Process.h>
 #include <math.h>
-const int ledPin=12;                 //Connect the LED Grove module to Pin12, Digital 12
+const int ledPin=13;                 //Connect the LED Grove module to Pin12, Digital 12
 const int thresholdvalue=10;         //The treshold for which the LED should turn on. 
 float Rsensor; //Resistance of sensor in K
 
@@ -14,7 +14,7 @@ int a;
 float temperature;
 int B=3975;                  //B value of the thermistor
 float resistance;
-
+boolean on = false;
 void setup() {
   Serial.begin(9600);                //Start the Serial connection
   pinMode(ledPin,OUTPUT);            //Set the LED on Digital 12 as an OUTPUT
@@ -22,14 +22,14 @@ void setup() {
 void loop() {
   int sensorValue = analogRead(0); 
   Rsensor=(float)(1023-sensorValue)*10/sensorValue;
-  if(Rsensor>thresholdvalue)
+  /*if(Rsensor>thresholdvalue)
   {
     digitalWrite(ledPin,HIGH);
   }
   else
   {
   digitalWrite(ledPin,LOW);
-  }
+  }*/
   Serial.println("the analog read data is ");
   Serial.println(sensorValue);
   Serial.println("the sensor resistance is ");
@@ -43,7 +43,14 @@ void loop() {
   fp=fopen("/home/root/data.json", "w");
   fprintf(fp, "{\"light\":\"%f\", \"temp\":\"%f\"}",Rsensor, fabsf(temperature));
   fclose(fp);
-  delay(1000);
+  if(!on){
+    digitalWrite(ledPin, HIGH);
+    on = true;
+  } else {
+    digitalWrite(ledPin, LOW);
+    on = false;
+  }
+  delay(10);
 
 }
 

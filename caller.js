@@ -16,7 +16,7 @@ var getJson = function(){
     //console.log(obj);
     var dayRequest = 1;
     var rising = true;
-    for(var dayRequestCount = 0; dayRequestCount <= 9; dayRequestCount++){
+    for(var dayRequestCount = 0; dayRequestCount < 12; dayRequestCount++){
       var pon = random(1,5);
       var differenceTemp = 0, differenceLight = 0;
       if((5-pon) > (pon-1)){
@@ -49,10 +49,11 @@ var getJson = function(){
       console.log("\t\tTemp: " + obj.temp + ", Light: " + obj.light + (rising == true ? " RISING" : " LOWERING"));
       console.log("dayRequest:" + dayRequest);
       requestCount++;
+      report(obj.temp, obj.light);
     }
-    console.log("requestCount:" + requestCount);
+    //console.log("requestCount:" + requestCount);
     
-    //report(obj.temp, obj.light);
+    
   });
 };
 
@@ -78,14 +79,16 @@ var report = function(temperature, light) {
 };
 
 // ------------------------- FUNCTION DEFINITIONS END -------------------------
+var totalDays = 28;
+for(var day = 0; day < totalDays; day++){
+  deviceIDs.forEach(function(deviceID){
+    console.log("Current request count: " + requestCount);
 
-deviceIDs.forEach(function(deviceID){
-  console.log("Current request count: " + requestCount);
+    console.log("\tPosting as " + deviceID);
+    getJson();
 
-  console.log("\tPosting as " + deviceID);
-  getJson();
-
-});
+  });
+};
 
 var random = function (low, high) {
     return Math.random() * (high - low) + low;
